@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical" >
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/recycler_view"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"/>
+    <me.seewhy.letterbar.LetterBar
+        android:id="@+id/letterBar"
+        android:layout_alignParentRight="true"
+        android:layout_width="20dp"
+        android:layout_height="match_parent"
+        app:textSize="20sp"
+        app:textColor="#33b5e5"
+        android:paddingTop="20dp"
+        android:paddingBottom="20dp"
+        />
+    <TextView
+        android:id="@+id/text"
+        android:layout_centerInParent="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+</RelativeLayout>
