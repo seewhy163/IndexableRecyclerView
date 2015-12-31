@@ -6,4 +6,9 @@ package me.seewhy.letterbar;
 public class BannerModel {
     String name;
     String url;
+
+    public BannerModel(String name, String url) {
+        this.name = name;
+        this.url = url;
+    }
 }

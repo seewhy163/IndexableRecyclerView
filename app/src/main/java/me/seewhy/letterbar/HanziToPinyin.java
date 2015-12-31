@@ -566,4 +566,19 @@ public class HanziToPinyin {
         }
         return sb.toString().trim().toLowerCase();
     }
+
+    public static String getFirstPinYinChar(String input) {
+        ArrayList<Token> tokens = HanziToPinyin.getInstance().get(input);
+        StringBuilder sb = new StringBuilder();
+        if (tokens != null && tokens.size() > 0) {
+            for (HanziToPinyin.Token token : tokens) {
+                if (token.type == HanziToPinyin.Token.PINYIN) {
+                    sb.append(token.target);
+                } else {
+                    sb.append(token.source);
+                }
+            }
+        }
+        return sb.length() > 0 ? sb.toString().trim().toUpperCase().substring(0, 1) : "#";
+    }
 }

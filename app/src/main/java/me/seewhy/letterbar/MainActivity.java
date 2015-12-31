@@ -7,6 +7,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class MainActivity extends Activity {
 
     private LetterBar mLetterBar;
@@ -39,8 +42,18 @@ public class MainActivity extends Activity {
                 }
             }
         });
+        List<BannerModel> models = new ArrayList<>();
+        models.add(new BannerModel("A", "2"));
+        models.add(new BannerModel("B", "2"));
+        models.add(new BannerModel("C", "2"));
+        models.add(new BannerModel("D", "2"));
+
+        models.add(new BannerModel("A", "2"));
+        models.add(new BannerModel("B", "2"));
+        models.add(new BannerModel("D", "2"));
+        models.add(new BannerModel("E", "2"));
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        mRecyclerView.setAdapter(new BannerAdapter());
+        mRecyclerView.setAdapter(new BannerAdapter(this, models));
     }
 
 }
