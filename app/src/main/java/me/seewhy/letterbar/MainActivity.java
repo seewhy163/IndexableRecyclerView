@@ -31,6 +31,36 @@ public class MainActivity extends Activity {
     }
 
     private void initData() {
+
+        List<BannerModel> models = new ArrayList<>();
+        models.add(new BannerModel("A", "2"));
+        models.add(new BannerModel("A", "2"));
+        models.add(new BannerModel("B", "2"));
+        models.add(new BannerModel("B", "2"));
+        models.add(new BannerModel("C", "2"));
+        models.add(new BannerModel("D", "2"));
+        models.add(new BannerModel("D", "2"));
+        models.add(new BannerModel("E", "2"));
+        models.add(new BannerModel("A", "2"));
+        models.add(new BannerModel("A", "2"));
+        models.add(new BannerModel("B", "2"));
+        models.add(new BannerModel("B", "2"));
+        models.add(new BannerModel("C", "2"));
+        models.add(new BannerModel("D", "2"));
+        models.add(new BannerModel("D", "2"));
+        models.add(new BannerModel("E", "2"));
+        models.add(new BannerModel("R", "2"));
+        models.add(new BannerModel("H", "2"));
+        models.add(new BannerModel("Z", "2"));
+        models.add(new BannerModel("Y", "2"));
+        models.add(new BannerModel("F", "2"));
+        models.add(new BannerModel("D", "2"));
+        models.add(new BannerModel("Y", "2"));
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        BannerAdapter bannerAdapter = new BannerAdapter(this,models);
+        final SectionedRecyclerAdapter recyclerAdapter = new SectionedRecyclerAdapter(this, R.layout.title_item, R.id.tvName, bannerAdapter);
+        mRecyclerView.setAdapter(recyclerAdapter);
+
         mLetterBar.setOnLetterSelectListener(new LetterBar.OnLetterSelectListener() {
             @Override
             public void onLetterSelect(int position, String letter, boolean confirm) {
@@ -38,22 +68,11 @@ public class MainActivity extends Activity {
                     mTextView.setVisibility(View.GONE);
                 } else {
                     mTextView.setVisibility(View.VISIBLE);
-                    mTextView.setText(letter);
+                //    mTextView.setText(letter+recyclerAdapter.sectionedPositionToPosition(position));
                 }
+               // mRecyclerView.scrollToPosition(recyclerAdapter.sectionedPositionToPosition(position));
             }
         });
-        List<BannerModel> models = new ArrayList<>();
-        models.add(new BannerModel("A", "2"));
-        models.add(new BannerModel("B", "2"));
-        models.add(new BannerModel("C", "2"));
-        models.add(new BannerModel("D", "2"));
-
-        models.add(new BannerModel("A", "2"));
-        models.add(new BannerModel("B", "2"));
-        models.add(new BannerModel("D", "2"));
-        models.add(new BannerModel("E", "2"));
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        mRecyclerView.setAdapter(new BannerAdapter(this, models));
     }
 
 }

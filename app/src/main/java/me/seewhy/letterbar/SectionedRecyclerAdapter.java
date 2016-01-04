@@ -1,20 +1,25 @@
 package me.seewhy.letterbar;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Set;
 
 public class SectionedRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-
+    public static final String TAG = "SectionedRecyclerAdapter";
     private final Context mContext;
     private static final int SECTION_TYPE = 0;
 
@@ -27,12 +32,19 @@ public class SectionedRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.
     private SparseArray<Section> mSections = new SparseArray<Section>();
 
 
-    public SectionedRecyclerAdapter(Context context, int sectionResourceId, int textResourceId) {
+    @SuppressLint("LongLogTag")
+    public SectionedRecyclerAdapter(Context context, int sectionResourceId, int textResourceId, RecyclerView.Adapter baseAdapter) {
 
         mLayoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         mSectionResourceId = sectionResourceId;
         mTextResourceId = textResourceId;
         mContext = context;
+        mBaseAdapter = baseAdapter;
+        if (baseAdapter instanceof SectionedRecyclerDelegate) {
+            setSections(((SectionedRecyclerDelegate) baseAdapter).getSections());
+        } else {
+            Log.d("SectionedRecyclerAdapter","the base adapter not implements SectionedRecyclerDelegate, please call setSections first");
+        }
         mBaseAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
             @Override
             public void onChanged() {
@@ -142,6 +154,28 @@ public class SectionedRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.
         notifyDataSetChanged();
     }
 
+    public void setSections(List<Section> sections) {
+        mSections.clear();
+
+        Collections.sort(sections, new Comparator<Section>() {
+            @Override
+            public int compare(Section o, Section o1) {
+                return (o.firstPosition == o1.firstPosition)
+                        ? 0
+                        : ((o.firstPosition < o1.firstPosition) ? -1 : 1);
+            }
+        });
+
+        int offset = 0; // offset positions for the headers we're adding
+        for (Section section : sections) {
+            section.sectionedPosition = section.firstPosition + offset;
+            mSections.append(section.sectionedPosition, section);
+            ++offset;
+        }
+
+        notifyDataSetChanged();
+    }
+
     public void setSections(Section[] sections) {
         mSections.clear();
 
@@ -207,4 +241,9 @@ public class SectionedRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.
         return (mValid ? mBaseAdapter.getItemCount() + mSections.size() : 0);
     }
 
+    public interface SectionedRecyclerDelegate {
+        List<SectionedRecyclerAdapter.Section> mSections = new ArrayList<>();
+
+        List<Section> getSections();
+    }
 }

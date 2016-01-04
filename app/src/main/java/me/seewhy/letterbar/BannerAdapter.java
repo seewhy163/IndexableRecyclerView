@@ -2,46 +2,44 @@ package me.seewhy.letterbar;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by BG204119 on 2015/12/30.
  */
-public class BannerAdapter extends SectionedRecyclerAdapter {
+public class BannerAdapter extends RecyclerView.Adapter implements SectionedRecyclerAdapter.SectionedRecyclerDelegate {
     public static final int TYPE_BANNER = 0;
-    public static final int TYPE_TITLE = 1;
     private final LayoutInflater mLayoutInflater;
 
     private List<BannerModel> mBannerModels;
     private int mNumberOfImagePerLine = 3;
-    HashMap<String, List<BannerModel>> mSectionedHashMap;
-
-    List<Integer> mTitlePosition = new ArrayList<>();
-    SectionHelper mSectionHelper;
+    private int mLineNumber = 0;
+    LinkedHashMap<String, List<BannerModel>> mSectionedHashMap;
+    private SparseArray<Integer> mLastPositionOfSections = new SparseArray<>();
+    private Set<Integer> mLastPositions = new HashSet<>();
+    private Context mContext;
 
     public BannerAdapter(Context context, List<BannerModel> models) {
-        super(context, R.layout.banner_item, R.id.tvName);
+        mContext = context;
         this.mBannerModels = models;
-        dispatch();
-        calculatePosition();
+        mSectionedHashMap = new LinkedHashMap<>();
         mLayoutInflater = LayoutInflater.from(context);
+        init();
     }
 
-    private void calculatePosition() {
-        mTitlePosition.add(0);
-        for (int i = 0; i < 26; i++) {
-
-        }
-    }
-
-    private void dispatch() {
+    private void init() {
         for (int i = 0; i < mBannerModels.size(); i++) {
             String ch = HanziToPinyin.getFirstPinYinChar(mBannerModels.get(i).name);
             List<BannerModel> bannerModels = mSectionedHashMap.get(ch);
@@ -51,55 +49,72 @@ public class BannerAdapter extends SectionedRecyclerAdapter {
             bannerModels.add(mBannerModels.get(i));
             mSectionedHashMap.put(ch, bannerModels);
         }
-        super.setSections(mSectionedHashMap.keySet());
+        Set<String> keySet = mSectionedHashMap.keySet();
+        String strings[] = new String[keySet.size()];
+        keySet.toArray(strings);
+        Arrays.sort(strings);
+        int pos = 0;
+        for (String title : strings) {
+            SectionedRecyclerAdapter.Section section = new SectionedRecyclerAdapter.Section(pos, title);
+            mSections.add(section);
+            pos += (mSectionedHashMap.get(title).size() + (mNumberOfImagePerLine - 1)) / mNumberOfImagePerLine;
+            mLastPositionOfSections.append(pos - 1, mSectionedHashMap.get(title).size() % mNumberOfImagePerLine);
+            for (int i = 0; i < mLastPositionOfSections.size(); i++) {
+                int key = mLastPositionOfSections.keyAt(i);
+                mLastPositions.add(key);
+            }
+        }
+        mLineNumber = pos;
+    }
+
+    @Override
+    public List<SectionedRecyclerAdapter.Section> getSections() {
+        return mSections;
     }
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        if (viewType == TYPE_BANNER)
-            return new BannerViewHolder(mLayoutInflater.inflate(R.layout.banner_item, parent, false));
-        else if (viewType == TYPE_TITLE) {
-            return new TitleViewHolder(mLayoutInflater.inflate(R.layout.title_item, parent, false));
-        } else {
-            return null;
-        }
+        return new BannerViewHolder(mLayoutInflater.inflate(R.layout.banner_item, parent, false));
+
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        if (mSectionHelper.isSectionHeaderPosition(position)) {
+        int images2Show = mNumberOfImagePerLine;
+        if (mLastPositions.contains(position)) {
+            images2Show = mLastPositionOfSections.get(position);
         }
+        BannerViewHolder bannerViewHolder = (BannerViewHolder) holder;
+        bannerViewHolder.mLinearLayout.removeAllViews();
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1.0f);
+        params.setMargins(10, 10, 10, 10);
+        for (int i = 0; i < images2Show; i++) {
+            ImageView imageView = new ImageView(mContext);
+            imageView.setImageResource(R.drawable.pic);
+            imageView.setLayoutParams(params);
+            bannerViewHolder.mLinearLayout.addView(imageView);
+        }
+
     }
 
     @Override
     public int getItemCount() {
-        return mBannerModels.size() + mTitlePosition.size();
+        return mLineNumber;
     }
 
     @Override
     public int getItemViewType(int position) {
-        if (mSectionHelper.isSectionHeaderPosition(position)) {
-            return TYPE_TITLE;
-        } else {
-            return TYPE_BANNER;
-        }
+        return TYPE_BANNER;
     }
 
     public static class BannerViewHolder extends RecyclerView.ViewHolder {
-        ImageView mImageView;
+        LinearLayout mLinearLayout;
 
         public BannerViewHolder(View itemView) {
             super(itemView);
-
-        }
-    }
-
-    public static class TitleViewHolder extends RecyclerView.ViewHolder {
-        ImageView mImageView;
-
-        public TitleViewHolder(View itemView) {
-            super(itemView);
-
+            mLinearLayout = (LinearLayout) itemView;
         }
     }
 }
+
+
