@@ -15,6 +15,7 @@ public class MainActivity extends Activity {
     private LetterBar mLetterBar;
     private TextView mTextView;
     private RecyclerView mRecyclerView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,16 +36,18 @@ public class MainActivity extends Activity {
         List<BannerModel> models = new ArrayList<>();
         models.add(new BannerModel("A", "2"));
         models.add(new BannerModel("A", "2"));
+        models.add(new BannerModel("A", "2"));
+        models.add(new BannerModel("A", "2"));
+        models.add(new BannerModel("B", "2"));
+        models.add(new BannerModel("B", "2"));
         models.add(new BannerModel("B", "2"));
         models.add(new BannerModel("B", "2"));
         models.add(new BannerModel("C", "2"));
         models.add(new BannerModel("D", "2"));
         models.add(new BannerModel("D", "2"));
         models.add(new BannerModel("E", "2"));
-        models.add(new BannerModel("A", "2"));
-        models.add(new BannerModel("A", "2"));
-        models.add(new BannerModel("B", "2"));
-        models.add(new BannerModel("B", "2"));
+
+
         models.add(new BannerModel("C", "2"));
         models.add(new BannerModel("D", "2"));
         models.add(new BannerModel("D", "2"));
@@ -56,8 +59,9 @@ public class MainActivity extends Activity {
         models.add(new BannerModel("F", "2"));
         models.add(new BannerModel("D", "2"));
         models.add(new BannerModel("Y", "2"));
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        BannerAdapter bannerAdapter = new BannerAdapter(this,models);
+        final LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        mRecyclerView.setLayoutManager(linearLayoutManager);
+        final BannerAdapter bannerAdapter = new BannerAdapter(this, models);
         final SectionedRecyclerAdapter recyclerAdapter = new SectionedRecyclerAdapter(this, R.layout.title_item, R.id.tvName, bannerAdapter);
         mRecyclerView.setAdapter(recyclerAdapter);
 
@@ -68,9 +72,11 @@ public class MainActivity extends Activity {
                     mTextView.setVisibility(View.GONE);
                 } else {
                     mTextView.setVisibility(View.VISIBLE);
-                //    mTextView.setText(letter+recyclerAdapter.sectionedPositionToPosition(position));
+                    mTextView.setText(letter + position);
                 }
-               // mRecyclerView.scrollToPosition(recyclerAdapter.sectionedPositionToPosition(position));
+                Integer sectionPosition = bannerAdapter.getSectionPosition(position);
+                if (sectionPosition != null)
+                    linearLayoutManager.scrollToPositionWithOffset(sectionPosition, 0);
             }
         });
     }

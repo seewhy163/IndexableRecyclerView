@@ -43,7 +43,7 @@ public class SectionedRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.
         if (baseAdapter instanceof SectionedRecyclerDelegate) {
             setSections(((SectionedRecyclerDelegate) baseAdapter).getSections());
         } else {
-            Log.d("SectionedRecyclerAdapter","the base adapter not implements SectionedRecyclerDelegate, please call setSections first");
+            Log.d("SectionedRecyclerAdapter", "the base adapter not implements SectionedRecyclerDelegate, please call setSections first");
         }
         mBaseAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
             @Override
@@ -198,6 +198,7 @@ public class SectionedRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.
         notifyDataSetChanged();
     }
 
+    //转换为包括section的position
     public int positionToSectionedPosition(int position) {
         int offset = 0;
         for (int i = 0; i < mSections.size(); i++) {
@@ -209,6 +210,7 @@ public class SectionedRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.
         return position + offset;
     }
 
+    //转换为不包括section的position
     public int sectionedPositionToPosition(int sectionedPosition) {
         if (isSectionHeaderPosition(sectionedPosition)) {
             return RecyclerView.NO_POSITION;

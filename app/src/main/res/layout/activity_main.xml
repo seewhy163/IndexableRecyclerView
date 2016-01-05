@@ -5,12 +5,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical" >
-    <android.support.v7.widget.RecyclerView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/recycler_view"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true"/>
     <me.seewhy.letterbar.LetterBar
         android:id="@+id/letterBar"
         android:layout_alignParentRight="true"
@@ -21,6 +15,14 @@
         android:paddingTop="20dp"
         android:paddingBottom="20dp"
         />
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_toLeftOf="@id/letterBar"
+        android:id="@+id/recycler_view"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"/>
+
     <TextView
         android:id="@+id/text"
         android:layout_centerInParent="true"

@@ -2,6 +2,7 @@ package me.seewhy.letterbar;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,6 +21,7 @@ import java.util.Set;
  * Created by BG204119 on 2015/12/30.
  */
 public class BannerAdapter extends RecyclerView.Adapter implements SectionedRecyclerAdapter.SectionedRecyclerDelegate {
+    public static final String TAG = "BannerAdapter";
     public static final int TYPE_BANNER = 0;
     private final LayoutInflater mLayoutInflater;
 
@@ -27,7 +29,12 @@ public class BannerAdapter extends RecyclerView.Adapter implements SectionedRecy
     private int mNumberOfImagePerLine = 3;
     private int mLineNumber = 0;
     LinkedHashMap<String, List<BannerModel>> mSectionedHashMap;
+
+    //key是每个section最后一行的position,value是从左往右数的位置
     private SparseArray<Integer> mLastPositionOfSections = new SparseArray<>();
+
+    //记录字母ascii对应的位置
+    private SparseArray<Integer> mKeyPositionMap = new SparseArray<>();
     private Set<Integer> mLastPositions = new HashSet<>();
     private Context mContext;
 
@@ -54,17 +61,33 @@ public class BannerAdapter extends RecyclerView.Adapter implements SectionedRecy
         keySet.toArray(strings);
         Arrays.sort(strings);
         int pos = 0;
+        int positionWithSection = 0;
+        int sectionNumber = 1;
         for (String title : strings) {
+            if (title.charAt(0) >= 'A' && title.charAt(0) <= 'Z') {
+                mKeyPositionMap.put(title.charAt(0) - 'A' + 1, positionWithSection);
+            } else {
+                //如果不是字母，用 0 表示
+                mKeyPositionMap.put(0, 0);
+            }
+
             SectionedRecyclerAdapter.Section section = new SectionedRecyclerAdapter.Section(pos, title);
             mSections.add(section);
             pos += (mSectionedHashMap.get(title).size() + (mNumberOfImagePerLine - 1)) / mNumberOfImagePerLine;
+            positionWithSection = pos + sectionNumber++;
             mLastPositionOfSections.append(pos - 1, mSectionedHashMap.get(title).size() % mNumberOfImagePerLine);
-            for (int i = 0; i < mLastPositionOfSections.size(); i++) {
-                int key = mLastPositionOfSections.keyAt(i);
-                mLastPositions.add(key);
-            }
+        }
+        for (int i = 0; i < mLastPositionOfSections.size(); i++) {
+            int key = mLastPositionOfSections.keyAt(i);
+            mLastPositions.add(key);
         }
         mLineNumber = pos;
+    }
+
+    public Integer getSectionPosition(int asciiPosition) {
+        Integer integer = mKeyPositionMap.get(asciiPosition);
+        Log.v(TAG, "origin position: " + asciiPosition + " mapped position: " + integer);
+        return integer;
     }
 
     @Override
