@@ -146,6 +146,6 @@ public class LetterBar extends View {
     }
 
     public interface OnLetterSelectListener {
-        void onLetterSelect(int position, String letter, boolean confirm);
+        void onLetterSelect(int position, String letter, boolean confirmed);
     }
 }

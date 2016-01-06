@@ -11,12 +11,9 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
 
 public class SectionedRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     public static final String TAG = "SectionedRecyclerAdapter";
@@ -30,6 +27,7 @@ public class SectionedRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.
 
     private RecyclerView.Adapter mBaseAdapter;
     private SparseArray<Section> mSections = new SparseArray<Section>();
+    private SparseArray<Integer> mKeyPositionMap = new SparseArray<>();
 
 
     @SuppressLint("LongLogTag")
@@ -45,6 +43,7 @@ public class SectionedRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.
         } else {
             Log.d("SectionedRecyclerAdapter", "the base adapter not implements SectionedRecyclerDelegate, please call setSections first");
         }
+
         mBaseAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
             @Override
             public void onChanged() {
@@ -126,37 +125,16 @@ public class SectionedRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.
         }
     }
 
-    public void setSections(Set<String> strings) {
-        mSections.clear();
-        Section[] sections = new Section[strings.size()];
-        Iterator<String> iterator = strings.iterator();
-        int i = 0;
-        while (iterator.hasNext()) {
-            sections[i++].title = iterator.next();
-        }
 
-        Arrays.sort(sections, new Comparator<Section>() {
-            @Override
-            public int compare(Section o, Section o1) {
-                return (o.firstPosition == o1.firstPosition)
-                        ? 0
-                        : ((o.firstPosition < o1.firstPosition) ? -1 : 1);
-            }
-        });
 
-        int offset = 0; // offset positions for the headers we're adding
-        for (Section section : sections) {
-            section.sectionedPosition = section.firstPosition + offset;
-            mSections.append(section.sectionedPosition, section);
-            ++offset;
-        }
-
-        notifyDataSetChanged();
+    public Integer getSectionPosition(int asciiPosition) {
+        Integer integer = mKeyPositionMap.get(asciiPosition);
+        Log.v(TAG, "origin position: " + asciiPosition + " mapped position: " + integer);
+        return integer;
     }
 
     public void setSections(List<Section> sections) {
         mSections.clear();
-
         Collections.sort(sections, new Comparator<Section>() {
             @Override
             public int compare(Section o, Section o1) {
@@ -168,31 +146,17 @@ public class SectionedRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.
 
         int offset = 0; // offset positions for the headers we're adding
         for (Section section : sections) {
+
             section.sectionedPosition = section.firstPosition + offset;
             mSections.append(section.sectionedPosition, section);
             ++offset;
-        }
-
-        notifyDataSetChanged();
-    }
-
-    public void setSections(Section[] sections) {
-        mSections.clear();
-
-        Arrays.sort(sections, new Comparator<Section>() {
-            @Override
-            public int compare(Section o, Section o1) {
-                return (o.firstPosition == o1.firstPosition)
-                        ? 0
-                        : ((o.firstPosition < o1.firstPosition) ? -1 : 1);
+            String title = section.title.toString();
+            if (title.charAt(0) >= 'A' && title.charAt(0) <= 'Z') {
+                mKeyPositionMap.put(title.charAt(0) - 'A' + 1, section.sectionedPosition);
+            } else {
+                //如果不是字母，用 0 表示
+                mKeyPositionMap.put(0, 0);
             }
-        });
-
-        int offset = 0; // offset positions for the headers we're adding
-        for (Section section : sections) {
-            section.sectionedPosition = section.firstPosition + offset;
-            mSections.append(section.sectionedPosition, section);
-            ++offset;
         }
 
         notifyDataSetChanged();
@@ -248,4 +212,5 @@ public class SectionedRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.
 
         List<Section> getSections();
     }
+
 }
