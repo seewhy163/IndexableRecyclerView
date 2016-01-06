@@ -5,11 +5,14 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Set;
@@ -38,6 +41,7 @@ public class BannerAdapter extends RecyclerView.Adapter implements SectionedRecy
     }
 
     private void init() {
+        Collections.sort(mBannerModels);
         mSections.clear();
         for (int i = 0; i < mBannerModels.size(); i++) {
             String ch = HanziToPinyin.getFirstPinYinChar(mBannerModels.get(i).name);
@@ -75,7 +79,10 @@ public class BannerAdapter extends RecyclerView.Adapter implements SectionedRecy
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        ((BannerViewHolder) holder).mTextView.setText(mBannerModels.get(position).url);
+//        ((BannerViewHolder) holder).mTextView.setText(mBannerModels.get(position).url);
+        Glide.with(mContext).load(mBannerModels.get(position).url)
+                .into(((BannerViewHolder) holder).mImageView);
+
     }
 
     @Override
@@ -90,12 +97,14 @@ public class BannerAdapter extends RecyclerView.Adapter implements SectionedRecy
 
     public static class BannerViewHolder extends RecyclerView.ViewHolder {
         LinearLayout mLinearLayout;
-        TextView mTextView;
+        //        TextView mTextView;
+        ImageView mImageView;
 
         public BannerViewHolder(View itemView) {
             super(itemView);
             mLinearLayout = (LinearLayout) itemView;
-            mTextView = (TextView) itemView.findViewById(R.id.tvBannerName);
+//            mTextView = (TextView) itemView.findViewById(R.id.tvBannerName);
+            mImageView = (ImageView) itemView.findViewById(R.id.iv1);
         }
     }
 }

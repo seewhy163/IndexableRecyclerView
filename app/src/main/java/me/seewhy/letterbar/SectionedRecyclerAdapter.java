@@ -76,16 +76,16 @@ public class SectionedRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.
 
         public TextView title;
 
-        public SectionViewHolder(View view, int mTextResourceid) {
+        public SectionViewHolder(View view, int resourceId) {
             super(view);
-            title = (TextView) view.findViewById(mTextResourceid);
+            title = (TextView) view.findViewById(resourceId);
         }
     }
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         if (viewType == SECTION_TYPE) {
-            final View view = LayoutInflater.from(mContext).inflate(mSectionResourceId, parent, false);
+            final View view = mLayoutInflater.inflate(mSectionResourceId, parent, false);
             return new SectionViewHolder(view, mTextResourceId);
         } else {
             return mBaseAdapter.onCreateViewHolder(parent, viewType - 1);
@@ -124,7 +124,6 @@ public class SectionedRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.
             return title;
         }
     }
-
 
 
     public Integer getSectionPosition(int asciiPosition) {
