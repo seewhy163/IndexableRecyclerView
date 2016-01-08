@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 
 import com.bumptech.glide.Glide;
 
@@ -20,37 +19,37 @@ import java.util.Set;
 /**
  * Created by BG204119 on 2015/12/30.
  */
-public class BannerAdapter extends RecyclerView.Adapter implements SectionedRecyclerAdapter.SectionedRecyclerDelegate {
-    public static final String TAG = "BannerAdapter";
+public class ImageAdapter extends RecyclerView.Adapter implements SectionedRecyclerAdapter.SectionedRecyclerDelegate {
+    public static final String TAG = "ImageAdapter";
     public static final int TYPE_BANNER = 0;
     private final LayoutInflater mLayoutInflater;
 
-    private List<BannerModel> mBannerModels;
+    private List<ImageModel> mImageModels;
     private int mNumberOfImagePerLine = 1;
     private int mLineNumber = 0;
-    LinkedHashMap<String, List<BannerModel>> mSectionedHashMap;
+    LinkedHashMap<String, List<ImageModel>> mSectionedHashMap;
 
     private Context mContext;
 
-    public BannerAdapter(Context context, List<BannerModel> models) {
+    public ImageAdapter(Context context, List<ImageModel> models) {
         mContext = context;
-        this.mBannerModels = models;
+        this.mImageModels = models;
         mSectionedHashMap = new LinkedHashMap<>();
         mLayoutInflater = LayoutInflater.from(context);
         init();
     }
 
     private void init() {
-        Collections.sort(mBannerModels);
+        Collections.sort(mImageModels);
         mSections.clear();
-        for (int i = 0; i < mBannerModels.size(); i++) {
-            String ch = HanziToPinyin.getFirstPinYinChar(mBannerModels.get(i).name);
-            List<BannerModel> bannerModels = mSectionedHashMap.get(ch);
-            if (bannerModels == null) {
-                bannerModels = new ArrayList<>();
+        for (int i = 0; i < mImageModels.size(); i++) {
+            String ch = HanziToPinyin.getFirstPinYinChar(mImageModels.get(i).name);
+            List<ImageModel> imageModels = mSectionedHashMap.get(ch);
+            if (imageModels == null) {
+                imageModels = new ArrayList<>();
             }
-            bannerModels.add(mBannerModels.get(i));
-            mSectionedHashMap.put(ch, bannerModels);
+            imageModels.add(mImageModels.get(i));
+            mSectionedHashMap.put(ch, imageModels);
         }
         Set<String> keySet = mSectionedHashMap.keySet();
         String strings[] = new String[keySet.size()];
@@ -79,10 +78,8 @@ public class BannerAdapter extends RecyclerView.Adapter implements SectionedRecy
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-//        ((BannerViewHolder) holder).mTextView.setText(mBannerModels.get(position).url);
-        Glide.with(mContext).load(mBannerModels.get(position).url)
+        Glide.with(mContext).load(mImageModels.get(position).resourceId)
                 .into(((BannerViewHolder) holder).mImageView);
-
     }
 
     @Override
@@ -96,15 +93,11 @@ public class BannerAdapter extends RecyclerView.Adapter implements SectionedRecy
     }
 
     public static class BannerViewHolder extends RecyclerView.ViewHolder {
-        LinearLayout mLinearLayout;
-        //        TextView mTextView;
         ImageView mImageView;
 
         public BannerViewHolder(View itemView) {
             super(itemView);
-            mLinearLayout = (LinearLayout) itemView;
-//            mTextView = (TextView) itemView.findViewById(R.id.tvBannerName);
-            mImageView = (ImageView) itemView.findViewById(R.id.iv1);
+            mImageView = (ImageView) itemView.findViewById(R.id.image);
         }
     }
 }

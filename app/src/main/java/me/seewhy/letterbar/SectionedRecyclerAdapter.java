@@ -41,7 +41,7 @@ public class SectionedRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.
         if (baseAdapter instanceof SectionedRecyclerDelegate) {
             setSections(((SectionedRecyclerDelegate) baseAdapter).getSections());
         } else {
-            Log.d("SectionedRecyclerAdapter", "the base adapter not implements SectionedRecyclerDelegate, please call setSections first");
+            Log.d(TAG, "the base adapter not implements SectionedRecyclerDelegate, please call setSections first");
         }
 
         mBaseAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {

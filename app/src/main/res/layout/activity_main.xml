@@ -4,28 +4,33 @@
 
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical" >
+                android:orientation="vertical">
+
     <me.seewhy.letterbar.LetterBar
         android:id="@+id/letterBar"
-        android:layout_alignParentRight="true"
         android:layout_width="20dp"
         android:layout_height="match_parent"
-        app:textSize="20sp"
-        app:textColor="#33b5e5"
-        android:paddingTop="20dp"
+        android:layout_alignParentRight="true"
         android:paddingBottom="20dp"
+        android:paddingTop="20dp"
+        app:textColor="#33b5e5"
+        app:textSize="20sp"
         />
+
     <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_toLeftOf="@id/letterBar"
-        android:id="@+id/recycler_view"
+        android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true"/>
+        android:layout_toLeftOf="@id/letterBar"/>
 
     <TextView
         android:id="@+id/text"
-        android:layout_centerInParent="true"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerVertical="true"
+        android:layout_marginBottom="20dp"
+        android:background="@android:color/darker_gray"/>
 </RelativeLayout>

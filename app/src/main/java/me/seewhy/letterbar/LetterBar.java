@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- *
+ * 
  */
 public class LetterBar extends View {
     public static final int SECTION_SIZE = 27;
@@ -121,7 +121,6 @@ public class LetterBar extends View {
     }
 
     private void initTextPaint() {
-        // Set up a default TextPaint object
         mTextPaint = new TextPaint();
         mTextPaint.setFlags(Paint.ANTI_ALIAS_FLAG);
         mTextPaint.setTextAlign(Paint.Align.CENTER);
