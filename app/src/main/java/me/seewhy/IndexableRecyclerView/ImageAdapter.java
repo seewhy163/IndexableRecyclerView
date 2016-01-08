@@ -1,4 +1,4 @@
-package me.seewhy.letterbar;
+package me.seewhy.IndexableRecyclerView;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
@@ -94,7 +95,7 @@ public class ImageAdapter extends RecyclerView.Adapter implements SectionedRecyc
 
     public static class BannerViewHolder extends RecyclerView.ViewHolder {
         ImageView mImageView;
-
+        TextView mTextView;
         public BannerViewHolder(View itemView) {
             super(itemView);
             mImageView = (ImageView) itemView.findViewById(R.id.image);

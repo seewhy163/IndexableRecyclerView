@@ -4,14 +4,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <me.seewhy.letterbar.LetterBar
+    <me.seewhy.IndexableRecyclerView.IndexableRecyclerView
         android:layout_width="300dp"
         android:layout_height="300dp"
         android:background="#ccc"
         android:paddingBottom="40dp"
         android:paddingLeft="20dp"
         app:textColor="#33b5e5"
-        app:letterBarDimension="24sp"
+        app:IndexableRecyclerViewDimension="24sp"
         />
 
 </FrameLayout>

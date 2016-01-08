@@ -1,4 +1,4 @@
-package me.seewhy.letterbar;
+package me.seewhy.IndexableRecyclerView;
 
 /**
  * Created by BG204119 on 2015/12/29.
@@ -9,7 +9,6 @@ public class Contact {
      * 联系人姓名
      */
     private String name;
-
     /**
      * 排序字母
      */

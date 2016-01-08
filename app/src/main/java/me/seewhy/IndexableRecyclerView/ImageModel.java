@@ -1,4 +1,4 @@
-package me.seewhy.letterbar;
+package me.seewhy.IndexableRecyclerView;
 
 /**
  * Created by BG204119 on 2015/12/30.

@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package me.seewhy.letterbar;
+package me.seewhy.IndexableRecyclerView;
 
 import android.text.TextUtils;
 import android.util.Log;

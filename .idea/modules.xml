@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/LetterBar.iml" filepath="$PROJECT_DIR$/LetterBar.iml" />
+      <module fileurl="file://$PROJECT_DIR$/IndexableRecyclerView.iml" filepath="$PROJECT_DIR$/IndexableRecyclerView.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>

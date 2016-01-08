@@ -1,4 +1,4 @@
-package me.seewhy.letterbar;
+package me.seewhy.IndexableRecyclerView;
 
 import android.annotation.SuppressLint;
 import android.content.Context;

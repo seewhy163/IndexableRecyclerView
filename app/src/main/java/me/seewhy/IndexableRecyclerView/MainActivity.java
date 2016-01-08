@@ -1,4 +1,4 @@
-package me.seewhy.letterbar;
+package me.seewhy.IndexableRecyclerView;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -12,10 +12,10 @@ import java.util.List;
 
 public class MainActivity extends Activity {
 
-    private LetterBar mLetterBar;
+    private IndexableRecyclerView mIndexableRecyclerView;
     private TextView mTextView;
     private RecyclerView mRecyclerView;
-
+    public static final int COLUMN_NUMBER = 3;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,7 +26,7 @@ public class MainActivity extends Activity {
     }
 
     private void initViews() {
-        mLetterBar = (LetterBar) findViewById(R.id.letterBar);
+        mIndexableRecyclerView = (IndexableRecyclerView) findViewById(R.id.IndexableRecyclerView);
         mTextView = (TextView) findViewById(R.id.text);
         mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view);
     }
@@ -49,7 +49,7 @@ public class MainActivity extends Activity {
         models.add(new ImageModel("老田", R.mipmap.lt));
         models.add(new ImageModel("女孩", R.mipmap.nh));
 
-        final GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 3);
+        final GridLayoutManager gridLayoutManager = new GridLayoutManager(this, COLUMN_NUMBER);
         mRecyclerView.setLayoutManager(gridLayoutManager);
         final ImageAdapter imageAdapter = new ImageAdapter(this, models);
         final SectionedRecyclerAdapter recyclerAdapter = new SectionedRecyclerAdapter(this, R.layout.title_item, R.id.tvName, imageAdapter);
@@ -58,10 +58,10 @@ public class MainActivity extends Activity {
         gridLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
             @Override
             public int getSpanSize(int position) {
-                return recyclerAdapter.isSectionHeaderPosition(position) ? 3 : 1;
+                return recyclerAdapter.isSectionHeaderPosition(position) ? COLUMN_NUMBER : 1;
             }
         });
-        mLetterBar.setOnLetterSelectListener(new LetterBar.OnLetterSelectListener() {
+        mIndexableRecyclerView.setOnLetterSelectListener(new IndexableRecyclerView.OnLetterSelectListener() {
             @Override
             public void onLetterSelect(int position, String letter, boolean confirmed) {
                 if (confirmed) {

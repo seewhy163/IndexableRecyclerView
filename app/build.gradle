@@ -5,7 +5,7 @@ android {
     buildToolsVersion "23.0.2"
 
     defaultConfig {
-        applicationId "me.seewhy.letterbar"
+        applicationId "me.seewhy.IndexableRecyclerView"
         minSdkVersion 15
         targetSdkVersion 23
         versionCode 1

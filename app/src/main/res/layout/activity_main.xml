@@ -6,8 +6,8 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
-    <me.seewhy.letterbar.LetterBar
-        android:id="@+id/letterBar"
+    <me.seewhy.IndexableRecyclerView.IndexableRecyclerView
+        android:id="@+id/IndexableRecyclerView"
         android:layout_width="20dp"
         android:layout_height="match_parent"
         android:layout_alignParentRight="true"
@@ -23,7 +23,7 @@
         android:layout_height="match_parent"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:layout_toLeftOf="@id/letterBar"/>
+        android:layout_toLeftOf="@id/IndexableRecyclerView"/>
 
     <TextView
         android:id="@+id/text"

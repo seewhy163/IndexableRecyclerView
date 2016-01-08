@@ -1,4 +1,4 @@
-package me.seewhy.letterbar;
+package me.seewhy.IndexableRecyclerView;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -14,13 +14,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 
+ *
  */
-public class LetterBar extends View {
+public class IndexableRecyclerView extends View {
     public static final int SECTION_SIZE = 27;
 
     private int mTextColor = Color.RED;
-    private float mLetterBarDimension = 0;
+    private float mIndexableRecyclerViewDimension = 0;
     private float mTextSize = 25.0f;
 
     private float mItemHeight;
@@ -48,17 +48,17 @@ public class LetterBar extends View {
         mSectionSize = mSections.size();
     }
 
-    public LetterBar(Context context) {
+    public IndexableRecyclerView(Context context) {
         super(context);
         init(null, 0);
     }
 
-    public LetterBar(Context context, AttributeSet attrs) {
+    public IndexableRecyclerView(Context context, AttributeSet attrs) {
         super(context, attrs);
         init(attrs, 0);
     }
 
-    public LetterBar(Context context, AttributeSet attrs, int defStyle) {
+    public IndexableRecyclerView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         init(attrs, defStyle);
     }
@@ -90,16 +90,16 @@ public class LetterBar extends View {
     private void init(AttributeSet attrs, int defStyle) {
         // Load attributes
         final TypedArray a = getContext().obtainStyledAttributes(
-                attrs, R.styleable.LetterBar, defStyle, 0);
+                attrs, R.styleable.IndexableRecyclerView, defStyle, 0);
 
         mTextColor = a.getColor(
-                R.styleable.LetterBar_textColor,
+                R.styleable.IndexableRecyclerView_textColor,
                 mTextColor);
-        mTextSize = a.getDimension(R.styleable.LetterBar_textSize, mTextSize);
+        mTextSize = a.getDimension(R.styleable.IndexableRecyclerView_textSize, mTextSize);
 
-        mLetterBarDimension = a.getDimension(
-                R.styleable.LetterBar_letterBarDimension,
-                mLetterBarDimension);
+        mIndexableRecyclerViewDimension = a.getDimension(
+                R.styleable.IndexableRecyclerView_IndexableRecyclerViewDimension,
+                mIndexableRecyclerViewDimension);
 
         a.recycle();
 

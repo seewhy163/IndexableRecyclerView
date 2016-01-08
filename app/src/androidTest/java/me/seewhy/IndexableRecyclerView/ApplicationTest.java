@@ -1,4 +1,4 @@
-package me.seewhy.letterbar;
+package me.seewhy.IndexableRecyclerView;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;
