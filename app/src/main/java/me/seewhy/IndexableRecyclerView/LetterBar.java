@@ -16,11 +16,10 @@ import java.util.List;
 /**
  *
  */
-public class IndexableRecyclerView extends View {
+public class LetterBar extends View {
     public static final int SECTION_SIZE = 27;
 
     private int mTextColor = Color.RED;
-    private float mIndexableRecyclerViewDimension = 0;
     private float mTextSize = 25.0f;
 
     private float mItemHeight;
@@ -48,17 +47,17 @@ public class IndexableRecyclerView extends View {
         mSectionSize = mSections.size();
     }
 
-    public IndexableRecyclerView(Context context) {
+    public LetterBar(Context context) {
         super(context);
         init(null, 0);
     }
 
-    public IndexableRecyclerView(Context context, AttributeSet attrs) {
+    public LetterBar(Context context, AttributeSet attrs) {
         super(context, attrs);
         init(attrs, 0);
     }
 
-    public IndexableRecyclerView(Context context, AttributeSet attrs, int defStyle) {
+    public LetterBar(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         init(attrs, defStyle);
     }
@@ -90,16 +89,12 @@ public class IndexableRecyclerView extends View {
     private void init(AttributeSet attrs, int defStyle) {
         // Load attributes
         final TypedArray a = getContext().obtainStyledAttributes(
-                attrs, R.styleable.IndexableRecyclerView, defStyle, 0);
+                attrs, R.styleable.LetterBar, defStyle, 0);
 
         mTextColor = a.getColor(
-                R.styleable.IndexableRecyclerView_textColor,
+                R.styleable.LetterBar_textColor,
                 mTextColor);
-        mTextSize = a.getDimension(R.styleable.IndexableRecyclerView_textSize, mTextSize);
-
-        mIndexableRecyclerViewDimension = a.getDimension(
-                R.styleable.IndexableRecyclerView_IndexableRecyclerViewDimension,
-                mIndexableRecyclerViewDimension);
+        mTextSize = a.getDimension(R.styleable.LetterBar_textSize, mTextSize);
 
         a.recycle();
 

@@ -6,7 +6,7 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
-    <me.seewhy.IndexableRecyclerView.IndexableRecyclerView
+    <me.seewhy.IndexableRecyclerView.LetterBar
         android:id="@+id/IndexableRecyclerView"
         android:layout_width="20dp"
         android:layout_height="match_parent"

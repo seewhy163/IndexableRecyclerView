@@ -12,7 +12,7 @@ import java.util.List;
 
 public class MainActivity extends Activity {
 
-    private IndexableRecyclerView mIndexableRecyclerView;
+    private LetterBar mLetterBar;
     private TextView mTextView;
     private RecyclerView mRecyclerView;
     public static final int COLUMN_NUMBER = 3;
@@ -26,7 +26,7 @@ public class MainActivity extends Activity {
     }
 
     private void initViews() {
-        mIndexableRecyclerView = (IndexableRecyclerView) findViewById(R.id.IndexableRecyclerView);
+        mLetterBar = (LetterBar) findViewById(R.id.IndexableRecyclerView);
         mTextView = (TextView) findViewById(R.id.text);
         mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view);
     }
@@ -61,7 +61,7 @@ public class MainActivity extends Activity {
                 return recyclerAdapter.isSectionHeaderPosition(position) ? COLUMN_NUMBER : 1;
             }
         });
-        mIndexableRecyclerView.setOnLetterSelectListener(new IndexableRecyclerView.OnLetterSelectListener() {
+        mLetterBar.setOnLetterSelectListener(new LetterBar.OnLetterSelectListener() {
             @Override
             public void onLetterSelect(int position, String letter, boolean confirmed) {
                 if (confirmed) {

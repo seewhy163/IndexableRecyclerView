@@ -1,6 +1,5 @@
 <resources>
-    <declare-styleable name="IndexableRecyclerView">
-        <attr name="IndexableRecyclerViewDimension" format="dimension"/>
+    <declare-styleable name="LetterBar">
         <attr name="textColor" format="color"/>
         <attr name="textSize" format="dimension" />"
     </declare-styleable>
