@@ -9,7 +9,8 @@ This is an Android Indexable Recyclerview, which can set multiple columns.
 # Usage
 
 1. Create an IndexableRecyclerView in xml.
-```
+
+ ```
 <me.seewhy.IndexableRecyclerView.IndexableRecyclerView
         android:id="@+id/indexable_recyclerview"
         android:layout_width="match_parent"
@@ -19,7 +20,7 @@ This is an Android Indexable Recyclerview, which can set multiple columns.
 
 2. Create your own adapter and call `setAdapter` method.
 
-```
+ ```
 List<ItemModel> models = new ArrayList<>();
 .
 .
@@ -29,4 +30,5 @@ models.add(new ItemModel("-1", R.mipmap.nh));
 IndexableRecyclerViewAdapter indexableRecyclerViewAdapter = new IndexableRecyclerViewAdapter(this, models);
 mIndexableRecyclerView.setAdapter(indexableRecyclerViewAdapter);
 ```
+
 
