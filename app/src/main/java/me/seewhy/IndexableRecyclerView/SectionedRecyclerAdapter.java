@@ -15,9 +15,11 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+/**
+ * 可以为recyclerview设置section，参考 https://gist.github.com/gabrielemariotti/4c189fb1124df4556058/revisions
+ */
 public class SectionedRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     public static final String TAG = "SectionedRecyclerAdapter";
-    private final Context mContext;
     private static final int SECTION_TYPE = 0;
 
     private boolean mValid = true;
@@ -36,12 +38,11 @@ public class SectionedRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.
         mLayoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         mSectionResourceId = sectionResourceId;
         mTextResourceId = textResourceId;
-        mContext = context;
         mBaseAdapter = baseAdapter;
         if (baseAdapter instanceof SectionedRecyclerDelegate) {
             setSections(((SectionedRecyclerDelegate) baseAdapter).getSections());
         } else {
-            Log.d(TAG, "the base adapter not implements SectionedRecyclerDelegate, please call setSections first");
+            Log.d(TAG, "The base adapter has not implement the SectionedRecyclerDelegate, please call setSections first");
         }
 
         mBaseAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
@@ -127,9 +128,7 @@ public class SectionedRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.
 
 
     public Integer getSectionPosition(int asciiPosition) {
-        Integer integer = mKeyPositionMap.get(asciiPosition);
-        Log.v(TAG, "origin position: " + asciiPosition + " mapped position: " + integer);
-        return integer;
+        return mKeyPositionMap.get(asciiPosition);
     }
 
     public void setSections(List<Section> sections) {
@@ -145,7 +144,6 @@ public class SectionedRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.
 
         int offset = 0; // offset positions for the headers we're adding
         for (Section section : sections) {
-
             section.sectionedPosition = section.firstPosition + offset;
             mSections.append(section.sectionedPosition, section);
             ++offset;

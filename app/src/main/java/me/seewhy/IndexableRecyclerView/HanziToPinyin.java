@@ -579,6 +579,6 @@ public class HanziToPinyin {
                 }
             }
         }
-        return sb.length() > 0 ? sb.toString().trim().toUpperCase().substring(0, 1) : "#";
+        return sb.length() > 0 ? sb.toString().trim().toUpperCase().substring(0, 1) : null;
     }
 }
